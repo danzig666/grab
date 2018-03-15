@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/mreiferson/go-httpclient"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -38,8 +39,11 @@ func NewClient() *Client {
 	return &Client{
 		UserAgent: "grab",
 		HTTPClient: &http.Client{
-			Transport: &http.Transport{
+			Transport: &httpclient.Transport{
 				Proxy: http.ProxyFromEnvironment,
+				ConnectTimeout:        1*time.Second,                                                                                                                                                 
+    				RequestTimeout:        10*time.Second,                                                                                                                                                
+    				ResponseHeaderTimeout: 5*time.Second,
 			},
 		},
 	}
